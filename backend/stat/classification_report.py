@@ -78,7 +78,7 @@ def class_report(y_true, y_pred, y_score, alpha, average='micro'):
             y_pred_imed = (y_pred == label).astype(int)
             y_score_imed = y_score[:, label_it]
 
-            auc_dl, auc_co, ci = calculate_auc_ci(y_true_imed, y_score_imed, alpha, print_results=False)
+            auc_dl, auc_co, ci = calculate_auc_ci(y_pred=y_pred_imed, y_true=y_true_imed, y_score=y_score_imed, alpha=alpha, print_results=False)
             auc_delong[label] = auc_dl
             auc_cov[label] = auc_co
             auc_ci[label] = ci
@@ -138,13 +138,12 @@ def class_report(y_true, y_pred, y_score, alpha, average='micro'):
 
 
 def run_classification_report(y_pred, y_true, y_score, alpha=0.95, print_results=True):
-    class_report_df = class_report(y_true=y_true, y_pred=y_pred, y_score=y_score, alpha=alpha)
+    class_report_df = class_report(y_true=y_true, y_pred=y_pred, y_score=y_score, alpha=float(alpha))
 
     if print_results == True:
         print("*** Confusion Matrix ***")
-        yp_int = np.around(y_pred)
         labels = np.unique(y_true)
-        cm = confusion_matrix(yp_int, y_true, labels=labels)
+        cm = confusion_matrix(y_true=y_true, y_pred=y_pred, labels=labels)
         print_cm(cm, labels)
         print()
 

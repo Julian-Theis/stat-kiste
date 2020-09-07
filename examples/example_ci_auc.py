@@ -4,9 +4,10 @@ from backend.stat.ci_auc import calculate_auc_ci
 if __name__ == "__main__":
     alpha = 0.95
     y_score = np.array([0.21, 0.32, 0.63, 0.35, 0.92, 0.79, 0.82, 0.99, 0.04, 0.21, 0.32, 0.63, 0.35, 0.92, 0.79, 0.82, 0.99, 0.04])
+    y_pred = np.around(y_score)
     y_true = np.array([0,    1,    0,    0,    1,    1,    0,    1,    0,   0,    1,    0,    0,    1,    1,    0,    1,    0])
 
-    auc, auc_cov, ci = calculate_auc_ci(y_true, y_score, alpha)
+    auc, auc_cov, ci = calculate_auc_ci(y_true, y_score, y_pred, alpha)
 
     print("*** Statistics ***")
     print("AUC:", auc)

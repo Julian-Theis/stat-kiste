@@ -28,7 +28,7 @@ if __name__ == "__main__":
         else:
             print()
             print("Calculating AUC with Confidence Intervals...")
-            ci_auc(file=args.file, y_score_col=args.y_score_col, y_true_col=args.y_true_col, alpha=float(args.alpha))
+            ci_auc(file=args.file, y_score_col=args.y_score_col, y_true_col=args.y_true_col, y_pred_col=args.y_pred_col, alpha=float(args.alpha))
 
     elif args.function == "classification_report":
         if args.file == "":
