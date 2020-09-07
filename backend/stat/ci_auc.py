@@ -208,9 +208,9 @@ def delong_roc_variance(ground_truth, predictions, sample_weight=None):
     assert len(aucs) == 1, "There is a bug in the code, please forward this to the developers"
     return aucs[0], delongcov
 
-def calculate_auc_ci(y_true, y_pred, alpha, print_results=True):
+def calculate_auc_ci(y_true, y_score, alpha, print_results=True):
     try:
-        auc, auc_cov = delong_roc_variance(y_true,y_pred)
+        auc, auc_cov = delong_roc_variance(y_true, y_score)
         auc_std = np.sqrt(auc_cov)
         lower_upper_q = np.abs(np.array([0, 1]) - (1 - alpha) / 2)
         ci = stats.norm.ppf(lower_upper_q, loc=auc, scale=auc_std)
@@ -218,7 +218,7 @@ def calculate_auc_ci(y_true, y_pred, alpha, print_results=True):
 
         if print_results:
             print("*** Confusion Matrix ***")
-            yp_int = np.around(y_pred)
+            yp_int = np.around(y_score)
             labels = np.unique(y_true)
             cm = confusion_matrix(yp_int, y_true, labels=labels)
             print_cm(cm, labels)
